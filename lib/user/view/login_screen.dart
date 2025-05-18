@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:delivery_flutter/common/component/custom_text_form_field.dart';
 import 'package:delivery_flutter/common/const/colors.dart';
+import 'package:delivery_flutter/common/const/data.dart';
 import 'package:delivery_flutter/common/layout/default_layout.dart';
 import 'package:delivery_flutter/common/view/root_tab.dart';
 import 'package:dio/dio.dart';
@@ -88,10 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
 
+                    final refreshToken = resp.data['refreshToken'];
+                    final accessToken = resp.data['accessToken'];
+
+                    await storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
+                    await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+
                     Navigator.of(
                       context,
                     ).push(MaterialPageRoute(builder: (_) => RootTab()));
-                    print(resp.data);
                   },
                   child: Text('로그인', style: TextStyle(color: Colors.white)),
                 ),
