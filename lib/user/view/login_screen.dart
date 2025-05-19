@@ -24,13 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final dio = Dio();
 
-    /// mac에서 시뮬레이터 사용할 경우는 네트워크 주소 똑같음
-    /// 이 외에는 네트워크가 다르므로 에뮬레이터 기준으로 따로 설정을 해줘야함
-    /// localhost
-    final emulatorIp = '10.0.2.2:3000';
-    final simulatorIp = '127.0.0.1:3000';
 
-    final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
     return DefaultLayout(
       child: SafeArea(
@@ -105,16 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 /// 회원가입 버튼
                 TextButton(
                   onPressed: () async {
-                    final refreshToken =
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc0NzUzMTYwMCwiZXhwIjoxNzQ3NjE4MDAwfQ.AkjgOfJPXDxIiu58YolgT9RB6rBZs_OrQuVZh848E6I';
 
-                    final resp = await dio.post(
-                      'http://$ip/auth/token',
-                      options: Options(
-                        headers: {'authorization': 'Bearer $refreshToken'},
-                      ),
-                    );
-                    print(resp.data);
                   },
                   child: Text('회원가입', style: TextStyle(color: Colors.black)),
                 ),

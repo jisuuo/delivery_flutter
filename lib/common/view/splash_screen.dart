@@ -3,6 +3,7 @@ import 'package:delivery_flutter/common/const/data.dart';
 import 'package:delivery_flutter/common/layout/default_layout.dart';
 import 'package:delivery_flutter/common/view/root_tab.dart';
 import 'package:delivery_flutter/user/view/login_screen.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -30,12 +31,19 @@ class _SplashScreenState extends State<SplashScreen> {
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
-    if (refreshToken == null || accessToken == null) {
+    final dio = Dio();
+
+    try {
+      /// accessToken 재발급 시도
+      final resp = await dio.post(
+        'http://$ip/auth/token',
+        options: Options(headers: {'authorization': 'Bearer $refreshToken'}),
+      );
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => LoginScreen()),
         (route) => false,
       );
-    } else {
+    } catch (e) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => RootTab()),
         (route) => false,
