@@ -19,7 +19,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // deleteToken();
     checkToken();
   }
 
@@ -39,15 +38,20 @@ class _SplashScreenState extends State<SplashScreen> {
         'http://$ip/auth/token',
         options: Options(headers: {'authorization': 'Bearer $refreshToken'}),
       );
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-        (route) => false,
-      );
-    } catch (e) {
+
+      await storage.write(key: ACCESS_TOKEN_KEY, value: resp.data['accessToken']);
+
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => RootTab()),
-        (route) => false,
+            (route) => false,
       );
+
+    } catch (e) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false,
+      );
+
     }
   }
 

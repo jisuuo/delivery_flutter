@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
@@ -13,4 +12,4 @@ final simulatorIp = '127.0.0.1:3000';
 
 final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
-final storage = FlutterSecureStorage();
+final storage = FlutterSecureStorage(); // 반드시 동일한 인스턴스를 사용

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:delivery_flutter/common/component/custom_text_form_field.dart';
 import 'package:delivery_flutter/common/const/colors.dart';
@@ -23,8 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final dio = Dio();
-
-
 
     return DefaultLayout(
       child: SafeArea(
@@ -89,9 +86,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     await storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
                     await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
 
+                    print(await storage.read(key: REFRESH_TOKEN_KEY));
+                    print(await storage.read(key: ACCESS_TOKEN_KEY));
+
                     Navigator.of(
                       context,
-                    ).push(MaterialPageRoute(builder: (_) => RootTab()));
+                    ).push(MaterialPageRoute(builder: (context) => RootTab()));
                   },
                   child: Text('로그인', style: TextStyle(color: Colors.white)),
                 ),
